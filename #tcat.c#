@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #define MAX_LENGTH 1000
-
 int main(int argc, char* argv[]) {
   if (argc == 1) { // if no args given
     printf("Arg error! No args given.\n");
@@ -19,14 +18,14 @@ int main(int argc, char* argv[]) {
     }
 
     char line[1000];
-    
-    while (fgets(line, MAX_LENGTH, fp) != NULL)
+    size_t len = 0;
+    ssize_t read;
+
       printf("%s", line);
     c = c + 1;
-    fclose(fp);
   }
   
-  //fclose(fp);
+  fclose(fp);
   
   return 0;
 }
