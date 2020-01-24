@@ -7,25 +7,25 @@ int main(int argc, char* argv[]) {
     return 0;
   }
 
+  int c = 1;
   FILE *fp;
-  if ((fp = fopen(argv[1], "r")) == NULL) {
-    printf("File error! It doesn't exist :(\n");
+  
+  while (c < argc) {
+    if ((fp = fopen(argv[c], "r")) == NULL) {
+      printf("File error! It doesn't exist :(\n");
 
-    exit(1);
+      exit(1);
+    }
+
+    char line[1000];
+    size_t len = 0;
+    ssize_t read;
+
+    while (fgets(line, MAX_LENGTH, fp) != NULL)
+      printf("%s", line);
+    c = c + 1;
   }
-
-  //char * line = NULL;
-  char line[1000];
-  size_t len = 0;
-  ssize_t read;
-
-  /*while ((read = getline(&line, &len, fp)) != -1) {
-    printf("%s", line);
-  }*/
-
-  while (fgets(line, MAX_LENGTH, fp) != NULL)
-    printf("%s", line);
-
+  
   fclose(fp);
   
   return 0;
