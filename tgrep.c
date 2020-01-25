@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #define MAX_LENGTH 1000
 
 int main(int argc, char* argv[]) {
@@ -9,7 +10,14 @@ int main(int argc, char* argv[]) {
 
   // searching from keyboard input (stdin)
   if (argc == 2) {
+    char *searchWord = argv[1];
+    
+    char in[4096];
+    fgets(in, sizeof(in), stdin); // fgets takes input and saves it to "in"
 
+    if (strstr(in, searchWord)) {
+      printf("%s", in);
+    }
   }
 
   // searching in a file
@@ -17,19 +25,24 @@ int main(int argc, char* argv[]) {
     char *searchWord = argv[1]; // the string we're searching for
     FILE *fp; // our file
     fp = fopen(argv[2], "r");
+    // check if valid
     if (fp == NULL) {
       printf("tgrep: cannot open file\n");
       exit(1);
     }
     
     // line stuff
-    char *buffer;
-    size_t buffsize = 32;
-    size_t chars;
+    char *buffer = NULL;
+    size_t buffsize = 0;
+    ssize_t read;
 
-    buffer = (char *)malloc(buffsize * sizeof(char));
-    chars = getline(&buffer, &buffsize, fp);
-    // ? now what ?
+    // get first line
+    while ((read = getline(&buffer, &buffsize, fp)) != -1) {
+      if (strstr(buffer, searchWord)) {
+	printf("%s", buffer);
+      }
+      //printf("%s", buffer); // just checking here to see if line reading is correct
+    }
 
     // ... and close.
     fclose(fp);
