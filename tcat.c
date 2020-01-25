@@ -25,8 +25,5 @@ int main(int argc, char* argv[]) {
     c = c + 1;
     fclose(fp);
   }
-  
-  //fclose(fp);
-  
   return 0;
 }
