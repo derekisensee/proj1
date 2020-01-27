@@ -20,23 +20,16 @@ int main(int argc, char* argv[]) {
       printf(strerror(errnum));
       exit(1);
     }
-    
-    /*long fileSize = ftell(fp); // get size of file
-    char *buffer = malloc(fileSize + 1);
-    fread(buffer, 1, fileSize, fp);
-    fclose(fp);
-    printf("%s", buffer);
-    c++;*/
-    char *buffer = NULL;
-    size_t buffsize = 0;
-    ssize_t read;
-
-    // go line by line
-    while ((read = getline(&buffer, &buffsize, fp)) != -1) {
-      fread(stdout, 1, 4, fp);
-      fread(stdout, 1, 1, fp);
+    // create and allocate memory for int
+    int out;
+    char charOut; // the character
+    fread(&out, sizeof(int), 1, fp);
+    while(!feof(fp)) { 
+      fread(&charOut, 1, 1, fp);
+      printf("%d, %c\n", out, charOut);
+      fread(&out, sizeof(int), 1, fp);
+      //fread(&charOut, 1, 1, fp);
     }
     c++;
   }
-
 }

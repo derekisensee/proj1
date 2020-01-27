@@ -14,6 +14,7 @@ int main(int argc, char* argv[]) {
     
     char in[4096];
     fgets(in, sizeof(in), stdin); // fgets takes input and saves it to "in"
+    //getline(&in, &sizeof(in), stdin);
 
     if (strstr(in, searchWord)) {
       printf("%s", in);
@@ -41,7 +42,6 @@ int main(int argc, char* argv[]) {
       if (strstr(buffer, searchWord)) {
 	printf("%s", buffer);
       }
-      //printf("%s", buffer); // just checking here to see if line reading is correct
     }
 
     // ... and close.

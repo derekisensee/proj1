@@ -32,22 +32,24 @@ int main(int argc, char* argv[]) {
       for (a = 0; line[a] != '\0'; a++) { // while we don't encounter the line termination char, keep checking
 	//printf("%c", line[a]); // for testing
 	char curr = line[a]; // our current counter
-	int c_count[1] = {1}; // our char-counter
+	//int c_count[1] = {1}; // our char-counter
+	int c_count = 1; 
 	int b;
 	// loop that counts duplicate chars. we break if we encounter a char not equal to the one we're checking
 	for (b = a + 1; line[b] != '\0'; b++) {
 	  if (line[b] == curr) {
-	    c_count[0] = c_count[0] + 1;
+	    c_count = c_count + 1;
 	  }
 	  else {
-	    a = a + c_count[0] - 1; // updates line counter so we don't recount lines
+	    a = a + c_count - 1; // updates line counter so we don't recount lines
 	    break;
 	  }
 	  //printf("%d", c_count[0]); // was using this to confirm what was being printed
 	}	
 	// done with counting, so print 4-byte binary integer | goofyiness occuring here?
-	fwrite(c_count, 4, 1, stdout);
-	fprintf(stdout, "%c", curr);
+	fwrite(&c_count, sizeof(int), 1, stdout);
+	fwrite(&curr, sizeof(char), 1, stdout);
+	//fprintf(stdout, "%c", curr);
 
 	//printf("\n");
       }
