@@ -29,10 +29,27 @@ int main(int argc, char* argv[]) {
     // for every line in the file
     while ((read = getline(&line, &linesize, fp)) != -1) {
       int a;
-      int c_count; // our char-counter
-      for (a = 0; line[a] != '\0'; ++a) { // while we don't encounter the line termination char, keep printing 
+      for (a = 0; line[a] != '\0'; a++) { // while we don't encounter the line termination char, keep checking
 	//printf("%c", line[a]); // for testing
-	
+	char curr = line[a]; // our current counter
+	int c_count[1] = {1}; // our char-counter
+	int b;
+	// loop that counts duplicate chars. we break if we encounter a char not equal to the one we're checking
+	for (b = a + 1; line[b] != '\0'; b++) {
+	  if (line[b] == curr) {
+	    c_count[0] = c_count[0] + 1;
+	  }
+	  else {
+	    a = a + c_count[0] - 1; // updates line counter so we don't recount lines
+	    break;
+	  }
+	  //printf("%d", c_count[0]); // was using this to confirm what was being printed
+	}	
+	// done with counting, so print 4-byte binary integer | goofyiness occuring here?
+	fwrite(c_count, 4, 1, stdout);
+	fprintf(stdout, "%c", curr);
+
+	//printf("\n");
       }
     }
     c++;
