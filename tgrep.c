@@ -6,6 +6,7 @@
 int main(int argc, char* argv[]) {
   if (argc == 1) { // if no args passed
     printf("tgrep: searchterm [file...]\n");
+    exit(1);
   }
 
   // searching from keyboard input (stdin)
@@ -22,29 +23,33 @@ int main(int argc, char* argv[]) {
   }
 
   // searching in a file
-  if (argc == 3) {
+  if (argc >= 3) {
+    int c = 2;
     char *searchWord = argv[1]; // the string we're searching for
-    FILE *fp; // our file
-    fp = fopen(argv[2], "r");
-    // check if valid
-    if (fp == NULL) {
-      printf("tgrep: cannot open file\n");
-      exit(1);
-    }
-    
-    // line stuff
-    char *buffer = NULL;
-    size_t buffsize = 0;
-    ssize_t read;
-
-    // get first line
-    while ((read = getline(&buffer, &buffsize, fp)) != -1) {
-      if (strstr(buffer, searchWord)) {
-	printf("%s", buffer);
+    while(c < argc) {
+      FILE *fp; // our file
+      fp = fopen(argv[c], "r");
+      // check if valid
+      if (fp == NULL) {
+	printf("tgrep: cannot open file\n");
+	exit(1);
       }
-    }
+    
+      // line stuff
+      char *buffer = NULL;
+      size_t buffsize = 0;
+      ssize_t read;
 
-    // ... and close.
-    fclose(fp);
+      // get first line
+      while ((read = getline(&buffer, &buffsize, fp)) != -1) {
+	if (strstr(buffer, searchWord)) {
+	  printf("%s", buffer);
+	}
+      }
+
+      // ... and close.
+      c++;
+      fclose(fp);
+    }
   }
 }

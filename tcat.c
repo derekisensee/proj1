@@ -4,7 +4,7 @@
 
 int main(int argc, char* argv[]) {
   if (argc == 1) { // if no args given
-    printf("Arg error! No args given.\n");
+    printf("tcat: [file...]\n");
     return 0;
   }
 
@@ -14,7 +14,6 @@ int main(int argc, char* argv[]) {
   while (c < argc) {
     if ((fp = fopen(argv[c], "r")) == NULL) {
       printf("tcat: cannot open file\n");
-
       exit(1);
     }
 

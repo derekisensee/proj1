@@ -20,15 +20,16 @@ int main(int argc, char* argv[]) {
       printf(strerror(errnum));
       exit(1);
     }
-    // create and allocate memory for int
-    int out;
+    int rep; // number of times we repeat char
     char charOut; // the character
-    fread(&out, sizeof(int), 1, fp);
+    fread(&rep, sizeof(int), 1, fp);
     while(!feof(fp)) { 
-      fread(&charOut, 1, 1, fp);
-      printf("%d, %c\n", out, charOut);
-      fread(&out, sizeof(int), 1, fp);
-      //fread(&charOut, 1, 1, fp);
+      fread(&charOut, 1, 1, fp); // reads char
+      int i = 0;
+      while(i++ < rep) {
+	printf("%c", charOut);
+      }
+      fread(&rep, sizeof(int), 1, fp); // reads number
     }
     c++;
   }
